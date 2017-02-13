@@ -30,6 +30,10 @@ export default class ApiV1 {
     this.request('/translations/locales', onSuccess, onFailure);
   }
 
+  fetchTranslations(onSuccess, onFailure) {
+    this.request('/translations', onSuccess, onFailure);
+  }
+
   fetchTime(onSuccess, onFailure) {
     this.request('/time', onSuccess, onFailure);
   }
