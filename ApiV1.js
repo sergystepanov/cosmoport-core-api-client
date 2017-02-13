@@ -26,7 +26,9 @@ export default class ApiV1 {
     this.request('/t_events/reference_data', onSuccess, onFailure);
   }
 
-  fetch
+  fetchLocales(onSuccess, onFailure) {
+    this.request('/translations/locales', onSuccess, onFailure);
+  }
 
   fetchTime(onSuccess, onFailure) {
     this.request('/time', onSuccess, onFailure);
