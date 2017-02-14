@@ -85,4 +85,8 @@ export default class ApiV1 {
   updateTranslationTextForId(id, value, onSuccess, onFailure) {
     this.postRequest(`/translations/${id}`, value, onSuccess, onFailure);
   }
+
+  createLocale(data, onSuccess, onFailure) {
+    this.postRequest(`/translations/locale`, data, onSuccess, onFailure);
+  }
 }
