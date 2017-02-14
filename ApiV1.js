@@ -14,6 +14,24 @@ export default class ApiV1 {
       .catch(onFailure);
   }
 
+  postRequest(uri, data, onSuccess, onFailure) {
+    fetch(this.address + uri, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    })
+      .then(onSuccess)
+      .catch(onFailure);
+  }
+
   fetchEvents(onSuccess, onFailure) {
     this.request('/test', onSuccess, onFailure);
   }
@@ -62,5 +80,9 @@ export default class ApiV1 {
 
   deleteEvent(id, onSuccess, onFailure) {
     this.request(`/test/delete?id=${id}`, onSuccess, onFailure);
+  }
+
+  updateTranslationTextForId(id, value, onSuccess, onFailure) {
+    this.postRequest(`/translations/${id}`, value, onSuccess, onFailure);
   }
 }
