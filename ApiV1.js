@@ -1,92 +1,89 @@
-export default class ApiV1 {
-  constructor() {
-    this.address = 'http://127.0.0.1:8080';
+const defaultUrl = 'http://127.0.0.1:8080';
+const defaultHttpHeaders = { Accept: 'application/json', 'Content-Type': 'application/json' };
+
+/**
+ * Parses Json value from a network request.
+ *
+ * @param {object} response The response object from a network request.
+ * @return {Promise} promise The parsed Json value, wrapped into a promise.
+ */
+const parseJson = ((response) => new Promise(
+  (resolve) => response.json()
+    .then((json) => resolve({ status: response.status, ok: response.ok, json }))
+));
+
+/**
+ * The main HTTP API v1 client.
+ *
+ * @since 0.1.0
+ */
+export default class ApiV11 {
+  constructor(url) {
+    this.address = url || defaultUrl;
+
+    /**
+     * Makes a requests to the API endpoint with some options.
+     *
+     * @param {string} uri A endpoint URI (like `/something`).
+     * @param {object} options The options to pass to fetch.
+     *
+     * @return {Propmise} The request promise.
+     */
+    this.request = (uri, options) => new Promise((resolve, reject) => {
+      fetch(this.address + uri, Object.assign({}, options, { mode: 'cors' }))
+        .then(response => parseJson(response))
+        .then(response => (response.ok ? resolve(response.json) : reject(response.json)))
+        .catch(error => reject({ code: error.code, message: error.message }));
+    });
+
+    /**
+     * Makes HTTP GET request to the API endpoint.
+     *
+     * @param {string} uri A endpoint URI.
+     *
+     * @return {Promise} The request promise.
+     */
+    this.get = (uri) => this.request(uri, { method: 'GET', headers: defaultHttpHeaders });
+
+    /**
+     * Makes HTTP POST request to the API endpoint.
+     *
+     * @param {string} uri A endpoint URI.
+     * @param {object} data Data values to pass in the request body.
+     *
+     * @return {Promise} The request promise.
+     */
+    this.post = (uri, data) => this.request(uri, { method: 'POST', headers: defaultHttpHeaders, body: JSON.stringify(data) });
+
+    /**
+     * Makes HTTP DELETE request to the API endpoint.
+     *
+     * @param {string} uri A endpoint URI.
+     *
+     * @return {Promise} The request promise.
+     */
+    this.delete = (uri) => this.request(uri, { method: 'DELETE', headers: defaultHttpHeaders });
   }
 
-  request(uri, onSuccess, onFailure) {
-    fetch(this.address + uri, {mode: 'cors'}).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    })
-      .then(onSuccess)
-      .catch(onFailure);
-  }
+  // Events
+  fetchEvents = () => this.get('/timetable')
+  fetchTimetable = () => this.fetchEvents()
+  createEvent = (data) => this.post('/timetable', data)
+  deleteEvent = (id) => this.delete(`/timetable/${id}`)
 
-  postRequest(uri, data, onSuccess, onFailure) {
-    fetch(this.address + uri, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    })
-      .then(onSuccess)
-      .catch(onFailure);
-  }
+  // Translations
+  fetchTranslations = () => this.get('/translations')
+  fetchTranslationsForLocale = (localeId) => this.get(`/translations/localeId=${localeId}`)
+  updateTranslationTextForId = (id, value) => this.post(`/translations/${id}`, value)
+  fetchLocales = () => this.get('/translations/locales')
+  createLocale = (data) => this.post('/translations/locale', data)
 
-  fetchEvents(onSuccess, onFailure) {
-    this.request('/test', onSuccess, onFailure);
-  }
+  // References
+  fetchReferenceData = () => this.get('/t_events/reference_data')
 
-  fetchTimetable(onSuccess, onFailure) {
-    this.request('/timetable', onSuccess, onFailure);
-  }
+  // Nodes
+  fetchNodes = () => this.get('/nodes')
 
-  fetchReferenceData(onSuccess, onFailure) {
-    this.request('/t_events/reference_data', onSuccess, onFailure);
-  }
-
-  fetchLocales(onSuccess, onFailure) {
-    this.request('/translations/locales', onSuccess, onFailure);
-  }
-
-  fetchTranslations(onSuccess, onFailure) {
-    this.request('/translations', onSuccess, onFailure);
-  }
-
-  fetchTranslationsForLocale(localeId, onSuccess, onFailure) {
-    this.request('/translations/localeId=' + localeId, onSuccess, onFailure);
-  }
-
-  fetchTime(onSuccess, onFailure) {
-    this.request('/time', onSuccess, onFailure);
-  }
-
-  addEvent(data, onSuccess, onFailure) {
-    fetch(`${this.address}/test/event`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      }
-      throw new Error('Network response was not ok.');
-    })
-      .then(onSuccess)
-      .catch(onFailure);
-  }
-
-  deleteEvent(id, onSuccess, onFailure) {
-    this.request(`/test/delete?id=${id}`, onSuccess, onFailure);
-  }
-
-  updateTranslationTextForId(id, value, onSuccess, onFailure) {
-    this.postRequest(`/translations/${id}`, value, onSuccess, onFailure);
-  }
-
-  createLocale(data, onSuccess, onFailure) {
-    this.postRequest(`/translations/locale`, data, onSuccess, onFailure);
-  }
+  // Server
+  fetchTime = () => this.get('/time')
 }
