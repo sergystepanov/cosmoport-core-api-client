@@ -80,7 +80,7 @@ export default class ApiV11 {
 
   // References
   fetchReferenceData = () => this.get('/t_events/reference_data')
-  createEventType = () => this.post('/t_events/types')
+  createEventType = (data) => this.post('/t_events/types', data)
 
   // Nodes
   fetchNodes = () => this.get('/nodes')
