@@ -77,6 +77,7 @@ export default class ApiV11 {
   updateTranslationTextForId = (id, value) => this.post(`/translations/${id}`, value)
   fetchLocales = () => this.get('/translations/locales')
   createLocale = (data) => this.post('/translations/locale', data)
+  updateLocaleShowData = (locale) => this.post('/translations/locale/show', locale)
 
   // References
   fetchReferenceData = () => this.get('/t_events/reference_data')
