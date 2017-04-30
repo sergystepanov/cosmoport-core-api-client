@@ -14,16 +14,10 @@ export default class WebSocketWrapper {
 
   constructor(options) {
     let ws,
-      events = [
-        'onopen', 'onmessage', 'onclose', 'onerror'
-      ],
+      events = ['onopen', 'onmessage', 'onclose', 'onerror'],
       i,
       len,
-      prop = {
-        opened: false,
-        closed: false,
-        error: false
-      },
+      prop = { opened: false, closed: false, error: false },
       method;
 
     if (typeof options === 'undefined' || !options) {
@@ -42,12 +36,8 @@ export default class WebSocketWrapper {
         // openend send queue
         if (this.queue.length > 0) {
           for (i = this.queue.length; --i >= 0;) {
-            this
-              .send
-              .apply(this, this.queue[0]);
-            this
-              .queue
-              .splice(0, 1);
+            this.send.apply(this, this.queue[0]);
+            this.queue.splice(0, 1);
           }
         }
       }
@@ -63,16 +53,12 @@ export default class WebSocketWrapper {
     };
 
     this.init = function () {
-      const cb = this
-        .onEventTrigger
-        .bind(this);
+      const cb = this.onEventTrigger.bind(this);
       ws = new WebSocket(options.url);
 
       for (i = 0; i < events.length; i++) {
         method = events[i];
-        this
-          .createMethod
-          .apply(ws, [method, options, cb]);
+        this.createMethod.apply(ws, [method, options, cb]);
       }
     };
 
@@ -80,17 +66,20 @@ export default class WebSocketWrapper {
       if (prop.closed) {
         throw 'InvalidOperation: Cannot send messages to a closed Websocket!';
       }
+
       if (!prop.opened) {
-        this
-          .queue
-          .push(arguments);
+        this.queue.push(arguments);
       } else {
         ws.send(...arguments);
       }
     };
 
+    this.close = function () {
+      ws.close();
+    }
+
     this.init();
-    
+
     return this;
   }
 }
