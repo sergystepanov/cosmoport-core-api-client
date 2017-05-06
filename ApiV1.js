@@ -67,6 +67,7 @@ export default class ApiV11 {
 
   // Events
   fetchEvents = () => this.get('/timetable')
+  fetchEventsPage = (page, count) => this.get(`/timetable/all?page=${page}&count=${count}`)
   fetchTimetable = () => this.fetchEvents()
   createEvent = (data) => this.post('/timetable', data)
   deleteEvent = (id) => this.delete(`/timetable/${id}`)
