@@ -90,4 +90,8 @@ export default class ApiV11 {
 
   // Server
   fetchTime = () => this.get('/time')
+
+  // Settings
+  fetchSettings = () => this.get('/settings')
+  updateSettingValueForId = (id, value) => this.post(`/settings/update/${id}`, value)
 }
