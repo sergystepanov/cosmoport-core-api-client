@@ -97,5 +97,5 @@ export default class ApiV11 {
   updateSettingValueForId = (id, value) => this.post(`/settings/update/${id}`, value)
 
   // Proxy
-  proxy = () => this.post('/proxy', data)
+  proxy = (data) => this.post('/proxy', data)
 }
