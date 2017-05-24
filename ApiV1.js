@@ -95,4 +95,7 @@ export default class ApiV11 {
   // Settings
   fetchSettings = () => this.get('/settings')
   updateSettingValueForId = (id, value) => this.post(`/settings/update/${id}`, value)
+
+  // Proxy
+  proxy = () => this.post('/proxy', data)
 }
