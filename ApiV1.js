@@ -85,6 +85,7 @@ export default class ApiV11 {
   // References
   fetchReferenceData = () => this.get('/t_events/reference_data')
   createEventType = (data) => this.post('/t_events/types', data)
+  deleteEventType = (id) => this.delete(`/t_events/types/${id}`)
 
   // Nodes
   fetchNodes = () => this.get('/nodes')
