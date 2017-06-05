@@ -90,6 +90,9 @@ export default class ApiV11 {
   // Nodes
   fetchNodes = () => this.get('/nodes')
 
+  // Gates
+  fetchGates = () => this.get('/gates')
+  
   // Server
   fetchTime = () => this.get('/time')
 
