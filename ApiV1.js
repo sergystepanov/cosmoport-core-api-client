@@ -102,4 +102,9 @@ export default class ApiV11 {
 
   // Proxy
   proxy = (data) => this.post('/proxy', data)
+
+  // Auth
+  authWith = (password) => this.post('/auth/check', password)
+  authSetPass = (password) => this.post('/auth/set', password)
+  
 }
