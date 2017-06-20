@@ -27,7 +27,7 @@ export default class ApiV11 {
      * @param {string} uri A endpoint URI (like `/something`).
      * @param {object} options The options to pass to fetch.
      *
-     * @return {Propmise} The request promise.
+     * @return {Promise} The request promise.
      */
     this.request = (uri, options) => new Promise((resolve, reject) => {
       fetch(this.address + uri, Object.assign({}, options, { mode: 'cors' }))
@@ -93,7 +93,7 @@ export default class ApiV11 {
 
   // Gates
   fetchGates = () => this.get('/gates')
-  
+
   // Server
   fetchTime = () => this.get('/time')
 
@@ -107,5 +107,5 @@ export default class ApiV11 {
   // Auth
   authWith = (password) => this.post('/auth/check', password)
   authSetPass = (password) => this.post('/auth/set', password)
-  
+
 }
