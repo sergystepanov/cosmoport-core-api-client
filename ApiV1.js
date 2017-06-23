@@ -70,6 +70,7 @@ export default class ApiV11 {
   fetchEventsPage = (page, count) => this.get(`/timetable/all?page=${page}&count=${count}`)
   fetchTimetable = () => this.fetchEvents()
   fetchEventsByIdForGate = (id) => this.get(`/timetable/byIdAndOneAfter?id=${id}`)
+  fetchEventsInRange = (start, end) => this.get(`/timetable?date=${start}&date2=${end}`)
   createEvent = (data) => this.post('/timetable', data)
   updateEvent = (data) => this.post('/timetable/update/event', data)
   deleteEvent = (id) => this.delete(`/timetable/${id}`)
