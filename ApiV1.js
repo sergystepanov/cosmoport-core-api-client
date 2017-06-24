@@ -1,6 +1,20 @@
 const defaultUrl = 'http://127.0.0.1:8080';
 const defaultHttpHeaders = { Accept: 'application/json', 'Content-Type': 'application/json' };
 
+export const eventStatus = {
+  CANCELED: 1,
+  BOARDING: 2,
+  DEPARTED: 3,
+  RETURN: 4,
+  RETURNED: 5,
+  PREORDER: 6
+}
+
+export const eventState = {
+  OPENED: 1,
+  CLOSED: 2
+}
+
 /**
  * Parses Json value from a network request.
  *
@@ -108,5 +122,4 @@ export default class ApiV11 {
   // Auth
   authWith = (password) => this.post('/auth/check', password)
   authSetPass = (password) => this.post('/auth/set', password)
-
 }
