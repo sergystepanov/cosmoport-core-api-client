@@ -8,12 +8,12 @@ export const eventStatus = {
   RETURN: 4,
   RETURNED: 5,
   PREORDER: 6
-}
+};
 
 export const eventState = {
   OPENED: 1,
   CLOSED: 2
-}
+};
 
 /**
  * Parses Json value from a network request.
