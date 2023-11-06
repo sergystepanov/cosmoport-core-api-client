@@ -31,7 +31,7 @@ const parseJson = ((response) => new Promise(
  *
  * @since 0.1.0
  */
-export default class ApiV11 {
+export default class ApiV1 {
   constructor(url) {
     this.address = url || defaultUrl;
 

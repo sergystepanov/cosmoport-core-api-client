@@ -33,7 +33,7 @@ export default class WebSocketWrapper {
       if (eventName === 'onopen') {
         prop.opened = true;
         prop.closed = false;
-        // openend send queue
+        // opened send queue
         if (this.queue.length > 0) {
           for (i = this.queue.length; --i >= 0;) {
             this.send.apply(this, this.queue[0]);
