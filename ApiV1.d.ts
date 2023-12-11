@@ -17,6 +17,7 @@ export namespace eventState {
  */
 export default class ApiV1 {
     constructor(url: any);
+
     address: any;
     /**
      * Makes a requests to the API endpoint with some options.
@@ -70,6 +71,7 @@ export default class ApiV1 {
     fetchReferenceData: () => Promise<any>;
     createEventType: (data: any) => Promise<any>;
     deleteEventType: (id: any) => Promise<any>;
+    createEventTypeCategory: (name: string) => Promise<any>;
     fetchNodes: () => Promise<any>;
     fetchGates: () => Promise<any>;
     fetchTime: () => Promise<any>;
