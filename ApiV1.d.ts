@@ -16,7 +16,7 @@ export namespace eventState {
  * @since 0.1.0
  */
 export default class ApiV1 {
-    constructor(url: any, errorHandler: (error: any) => void);
+    constructor(url: any, request: (uri: string, options: object) => Promise<any>);
 
     address: any;
     /**

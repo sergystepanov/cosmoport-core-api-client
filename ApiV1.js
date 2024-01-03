@@ -39,7 +39,7 @@ const parseJson = (response) =>
  * @since 0.1.0
  */
 export default class ApiV1 {
-    constructor(url, errorHandler) {
+    constructor({url, request}) {
         this.address = url || defaultUrl;
 
         /**
@@ -50,7 +50,7 @@ export default class ApiV1 {
          *
          * @return {Promise} The request promise.
          */
-        this.request = (uri, options) =>
+        this.request = request || ((uri, options) =>
             new Promise((resolve, reject) => {
                 fetch(this.address + uri, Object.assign({}, options, {mode: 'cors'}))
                     .then((response) => parseJson(response))
@@ -58,11 +58,10 @@ export default class ApiV1 {
                         response.ok ? resolve(response.json) : reject(response.json),
                     )
                     .catch((error) => {
-                            const unwrap = {code: error.code, message: error.message};
-                            errorHandler ? errorHandler(unwrap) : reject(unwrap)
+                            reject({code: error.code, message: error.message})
                         }
                     );
-            });
+            }));
 
         /**
          * Makes HTTP GET request to the API endpoint.
