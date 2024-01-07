@@ -1,2 +1,2 @@
-export { default as Websocket } from './types/WebSocketWrapper';
-export { eventStatus, eventState, default as Api } from './types/ApiV1';
+export { default as Websocket } from './WebSocketWrapper';
+export { eventStatus, eventState, default as Api } from './ApiV1';
