@@ -112,6 +112,10 @@ export default class ApiV1 {
     updateEvent = (data) => this.post('/timetable/update/event', data);
     deleteEvent = (id) => this.delete(`/timetable/${id}`);
 
+    // Tickets
+    updateEventTickets = (id, number, forceOpen = false) =>
+        this.post('/timetable/tickets', {id, tickets: number, force_open: forceOpen})
+
     // Translations
     fetchTranslations = () => this.get('/translations');
     fetchTranslationsForLocale = (localeId) =>

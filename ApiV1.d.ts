@@ -61,6 +61,7 @@ export default class ApiV1 {
     createEvent: (data: any) => Promise<any>;
     updateEvent: (data: any) => Promise<any>;
     deleteEvent: (id: any) => Promise<any>;
+    updateEventTickets: (id: number, num: number, forceOpen?: boolean) => Promise<any>;
     fetchTranslations: () => Promise<any>;
     fetchTranslationsForLocale: (localeId: any) => Promise<any>;
     updateTranslationTextForId: (id: any, value: any) => Promise<any>;
